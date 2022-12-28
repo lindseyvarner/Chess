@@ -4,7 +4,7 @@ import com.lindseyvarner.engine.Alliance;
 import com.lindseyvarner.engine.board.Board;
 import com.lindseyvarner.engine.board.Move;
 
-import java.util.List;
+import java.util.Collection;
 
 public abstract class Piece {
     protected final int piecePosition;
@@ -19,6 +19,6 @@ public abstract class Piece {
         return this.pieceAlliance;
     }
 
-    public abstract List<Move> calculateLegalMoves(final Board board);
+    public abstract Collection<Move> calculateLegalMoves(final Board board);
 }
 

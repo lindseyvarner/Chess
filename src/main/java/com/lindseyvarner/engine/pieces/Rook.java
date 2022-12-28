@@ -11,9 +11,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class Bishop extends Piece {
-    private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -7, 7, 9};
-    Bishop(int piecePosition, Alliance pieceAlliance) {
+public class Rook extends Piece {
+    private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-8, -1, 1, 8};
+    Rook(int piecePosition, Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -26,7 +26,7 @@ public class Bishop extends Piece {
 
                 if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset) ||
                         isEightColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset)) {
-                     break;
+                    break;
                 }
 
                 candidateDestinationCoordinate += candidateCoordinatesOffset;
@@ -50,10 +50,10 @@ public class Bishop extends Piece {
         return Collections.unmodifiableList(legalMoves);
     }
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.FIRST_COLUMN[currentPosition] && (candidateOffset == -9 || candidateOffset == -7);
+        return Utilities.FIRST_COLUMN[currentPosition] && (candidateOffset == -1);
     }
 
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.EIGHTH_COLUMN[currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
+        return Utilities.EIGHTH_COLUMN[currentPosition] && (candidateOffset == 1);
     }
 }

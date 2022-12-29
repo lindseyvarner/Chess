@@ -14,7 +14,7 @@ import java.util.List;
 public class Pawn extends Piece {
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {7, 8, 9, 16};
     public Pawn(final int piecePosition, final Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+        super(PieceType.PAWN, piecePosition, pieceAlliance);
     }
 
     @Override
@@ -27,14 +27,14 @@ public class Pawn extends Piece {
             if (!Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
                 continue;
                 }
-            if (candidateCoordinatesOffset == 8 && board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
+            if (candidateCoordinatesOffset == 8 && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                 legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
             }
             else if (candidateCoordinatesOffset == 16 && this.isFirstMove() &&
                     (Utilities.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
                     (Utilities.SEVENTH_ROW[this.piecePosition] && getPieceAlliance().isWhite())) {
-               final int behindCandidateDestinationCoordinate =
-                       this.piecePosition + (this.pieceAlliance.getDirection() * 8);
+                final int behindCandidateDestinationCoordinate =
+                        this.piecePosition + (this.pieceAlliance.getDirection() * 8);
 
                if (!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() &&
                     !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
@@ -69,6 +69,17 @@ public class Pawn extends Piece {
         }
         return Collections.unmodifiableList(legalMoves);
     }
+
+    @Override
+    public Pawn movePiece(final Move move) {
+        return new Pawn(move.getDestinationCoordinate(), move.getMovedPiece().getPieceAlliance());
+    }
+
+    @Override
+    public String toString() {
+        return Piece.PieceType.PAWN.toString();
+    }
+
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.FIRST_COLUMN[currentPosition] &&
                 (candidateOffset == -1 ||candidateOffset == -7 || candidateOffset == -9);

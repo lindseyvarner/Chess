@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Queen extends Piece {
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9};
-    public Queen(int piecePosition, Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+    public Queen(final int piecePosition, final Alliance pieceAlliance) {
+        super(PieceType.QUEEN, piecePosition, pieceAlliance);
     }
 
     @Override
@@ -51,6 +51,17 @@ public class Queen extends Piece {
         }
         return Collections.unmodifiableList(legalMoves);
     }
+
+    @Override
+    public Queen movePiece(final Move move) {
+        return new Queen(move.getDestinationCoordinate(), move.getMovedPiece().getPieceAlliance());
+    }
+
+    @Override
+    public String toString() {
+        return Piece.PieceType.QUEEN.toString();
+    }
+
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.FIRST_COLUMN[currentPosition] &&
                 (candidateOffset == -1 ||candidateOffset == -7 || candidateOffset == -9);

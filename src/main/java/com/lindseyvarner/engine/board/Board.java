@@ -2,6 +2,9 @@ package com.lindseyvarner.engine.board;
 
 import com.lindseyvarner.engine.Alliance;
 import com.lindseyvarner.engine.pieces.*;
+import com.lindseyvarner.engine.players.BlackPlayer;
+import com.lindseyvarner.engine.players.Player;
+import com.lindseyvarner.engine.players.WhitePlayer;
 
 import java.util.*;
 
@@ -9,14 +12,21 @@ public class Board {
     private final List<Tile> gameBoard;
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
+    private final Player currentPlayer;
 
-    private Board(Builder builder) {
+    private Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
         this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
 
         final Collection<Move> whiteLegalMoves = calculateLegalMoves(this.whitePieces);
         final Collection<Move> blackLegalMoves = calculateLegalMoves(this.blackPieces);
+
+        this.whitePlayer = new WhitePlayer(this, whiteLegalMoves, blackLegalMoves);
+        this.blackPlayer = new BlackPlayer(this, whiteLegalMoves, blackLegalMoves);
+        this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer, this.blackPlayer);
     }
 
     @Override
@@ -31,6 +41,26 @@ public class Board {
             }
         }
         return builder.toString();
+    }
+
+    public Player whitePlayer() {
+        return this.whitePlayer;
+    }
+
+    public Player blackPlayer() {
+        return this.blackPlayer;
+    }
+
+    public Player currentPlayer() {
+        return this.currentPlayer;
+    }
+
+    public Collection<Piece> getWhitePieces() {
+        return this.whitePieces;
+    }
+
+    public Collection<Piece> getBlackPieces() {
+        return this.blackPieces;
     }
 
     private Collection<Move> calculateLegalMoves(final Collection<Piece> pieces) {
@@ -71,18 +101,6 @@ public class Board {
     public static Board createStandardBoard() {
         final Builder builder = new Builder();
 
-        for (int i = 8; i < 16; i++) {
-            builder.setPiece(new Pawn(i, Alliance.BLACK));
-        }
-        builder.setPiece(new King(4, Alliance.BLACK));
-        builder.setPiece(new Queen(3, Alliance.BLACK));
-        builder.setPiece(new Rook(0, Alliance.BLACK));
-        builder.setPiece(new Rook(7, Alliance.BLACK));
-        builder.setPiece(new Knight(1, Alliance.BLACK));
-        builder.setPiece(new Knight(6, Alliance.BLACK));
-        builder.setPiece(new Bishop(2, Alliance.BLACK));
-        builder.setPiece(new Bishop(5, Alliance.BLACK));
-
         for (int i = 48; i < 56; i++) {
             builder.setPiece(new Pawn(i, Alliance.WHITE));
         }
@@ -95,6 +113,18 @@ public class Board {
         builder.setPiece(new Bishop(58, Alliance.WHITE));
         builder.setPiece(new Bishop(61, Alliance.WHITE));
 
+        for (int i = 8; i < 16; i++) {
+            builder.setPiece(new Pawn(i, Alliance.BLACK));
+        }
+        builder.setPiece(new King(4, Alliance.BLACK));
+        builder.setPiece(new Queen(3, Alliance.BLACK));
+        builder.setPiece(new Rook(0, Alliance.BLACK));
+        builder.setPiece(new Rook(7, Alliance.BLACK));
+        builder.setPiece(new Knight(1, Alliance.BLACK));
+        builder.setPiece(new Knight(6, Alliance.BLACK));
+        builder.setPiece(new Bishop(2, Alliance.BLACK));
+        builder.setPiece(new Bishop(5, Alliance.BLACK));
+
         return builder.build();
     }
 
@@ -103,7 +133,7 @@ public class Board {
         Alliance nextMoveMaker;
 
         public Builder() {
-
+            this.boardConfiguation = new HashMap<>();
         }
 
         public Builder setPiece(final Piece piece) {

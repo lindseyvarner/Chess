@@ -14,7 +14,7 @@ import java.util.List;
 public class Knight extends Piece {
     private static final int[] CANDIDATE_MOVE_COORDINATES = {-17, -15, -10, -6, 6, 10, 15, 17};
     public Knight(final int piecePosition, final Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+        super(PieceType.KNIGHT, piecePosition, pieceAlliance);
     }
 
     @Override
@@ -50,6 +50,17 @@ public class Knight extends Piece {
         }
         return Collections.unmodifiableList(legalMoves);
     }
+
+    @Override
+    public Knight movePiece(final Move move) {
+        return new Knight(move.getDestinationCoordinate(), move.getMovedPiece().getPieceAlliance());
+    }
+
+    @Override
+    public String toString() {
+        return Piece.PieceType.KNIGHT.toString();
+    }
+
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.FIRST_COLUMN[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
                 candidateOffset == 6 || candidateOffset == 15);

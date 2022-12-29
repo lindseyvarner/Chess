@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {7, 8, 9, 16};
-    Pawn(final int piecePosition, final Alliance pieceAlliance) {
+    public Pawn(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -21,7 +21,6 @@ public class Pawn extends Piece {
     public Collection<Move> calculateLegalMoves(final Board board) {
         final List<Move> legalMoves = new ArrayList<>();
         for (final int candidateCoordinatesOffset : CANDIDATE_MOVE_VECTOR_COORDINATES) {
-
             final int candidateDestinationCoordinate =
                     this.piecePosition + (this.pieceAlliance.getDirection() * candidateCoordinatesOffset);
 
@@ -34,7 +33,6 @@ public class Pawn extends Piece {
             else if (candidateCoordinatesOffset == 16 && this.isFirstMove() &&
                     (Utilities.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
                     (Utilities.SEVENTH_ROW[this.piecePosition] && getPieceAlliance().isWhite())) {
-
                final int behindCandidateDestinationCoordinate =
                        this.piecePosition + (this.pieceAlliance.getDirection() * 8);
 
@@ -46,8 +44,10 @@ public class Pawn extends Piece {
             else if (candidateCoordinatesOffset == 7 &&
                     !((Utilities.EIGHTH_COLUMN[this.piecePosition] && this.pieceAlliance.isWhite() ||
                     (Utilities.FIRST_COLUMN[this.piecePosition] && this.pieceAlliance.isBlack())))) {
+
                 if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+
                     if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
                         legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                     }
@@ -55,8 +55,10 @@ public class Pawn extends Piece {
                 else if (candidateCoordinatesOffset == 9 &&
                         !((Utilities.FIRST_COLUMN[this.piecePosition] && this.pieceAlliance.isWhite() ||
                           (Utilities.EIGHTH_COLUMN[this.piecePosition] && this.pieceAlliance.isBlack())))) {
+
                     if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                         final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+
                         if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
                             legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                         }

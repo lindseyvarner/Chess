@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Knight extends Piece {
     private static final int[] CANDIDATE_MOVE_COORDINATES = {-17, -15, -10, -6, 6, 10, 15, 17};
-    Knight(final int piecePosition, final Alliance pieceAlliance) {
+    public Knight(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -23,12 +23,13 @@ public class Knight extends Piece {
         for (final int currentCandidateOffset: CANDIDATE_MOVE_COORDINATES) {
             final int candidateDestinationCoordinate;
             candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
+
             if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
                 if (isFirstColumnExclusion(this.piecePosition, currentCandidateOffset) ||
-                        isSecondColumnExclusion(this.piecePosition, currentCandidateOffset) ||
-                        isSeventhColumnExclusion(this.piecePosition, currentCandidateOffset) ||
-                        isEighthColumnExclusion(this.piecePosition, currentCandidateOffset)) {
+                    isSecondColumnExclusion(this.piecePosition, currentCandidateOffset) ||
+                    isSeventhColumnExclusion(this.piecePosition, currentCandidateOffset) ||
+                    isEighthColumnExclusion(this.piecePosition, currentCandidateOffset)) {
                     continue;
                 }
 
@@ -42,7 +43,7 @@ public class Knight extends Piece {
 
                     if (this.pieceAlliance != pieceAlliance) {
                         legalMoves.add(new Move.AttackMove(board, this,
-                                candidateDestinationCoordinate, pieceAtDestination));
+                        candidateDestinationCoordinate, pieceAtDestination));
                     }
                 }
             }

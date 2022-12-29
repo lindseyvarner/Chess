@@ -13,7 +13,7 @@ import java.util.List;
 
 public class King extends Piece {
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9};
-    King(int piecePosition, Alliance pieceAlliance) {
+    public King(int piecePosition, Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -27,9 +27,9 @@ public class King extends Piece {
                 isEighthColumnExclusion(this.piecePosition, candidateCoordinatesOffset)) {
                 continue;
             }
-
             if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
                 final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
+
                 if (!candidateDestinationTile.isTileOccupied()) {
                     legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                 }

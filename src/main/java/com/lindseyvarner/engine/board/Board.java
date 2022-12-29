@@ -7,6 +7,10 @@ import com.lindseyvarner.engine.players.Player;
 import com.lindseyvarner.engine.players.WhitePlayer;
 
 import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Board {
     private final List<Tile> gameBoard;
@@ -16,7 +20,7 @@ public class Board {
     private final BlackPlayer blackPlayer;
     private final Player currentPlayer;
 
-    private Board(final Builder builder) {
+    public Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
         this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
@@ -128,9 +132,15 @@ public class Board {
         return builder.build();
     }
 
+    public Collection<Move> getLegalMoves() {
+        return Stream.concat(this.whitePlayer.getLegalMoves().stream(),
+                             this.blackPlayer.getLegalMoves().stream()).collect(Collectors.toList());
+    }
+
     public static class Builder {
         Map<Integer, Piece> boardConfiguation;
         Alliance nextMoveMaker;
+        Pawn enPassantPawn;
 
         public Builder() {
             this.boardConfiguation = new HashMap<>();
@@ -148,6 +158,11 @@ public class Board {
 
         public Board build() {
             return new Board(this);
+        }
+
+        public Builder setEnPassant(Pawn enPassantPawn) {
+            this.enPassantPawn = enPassantPawn;
+            return this;
         }
     }
 }

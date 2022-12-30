@@ -26,10 +26,10 @@ public class Knight extends Piece {
 
             if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
-                if (isFirstColumnExclusion(this.piecePosition, currentCandidateOffset) ||
-                    isSecondColumnExclusion(this.piecePosition, currentCandidateOffset) ||
-                    isSeventhColumnExclusion(this.piecePosition, currentCandidateOffset) ||
-                    isEighthColumnExclusion(this.piecePosition, currentCandidateOffset)) {
+                if (isAFileExclusion(this.piecePosition, currentCandidateOffset) ||
+                    isBFileExclusion(this.piecePosition, currentCandidateOffset) ||
+                    isGFileExclusion(this.piecePosition, currentCandidateOffset) ||
+                    isHFileExclusion(this.piecePosition, currentCandidateOffset)) {
                         continue;
                 }
 
@@ -60,22 +60,22 @@ public class Knight extends Piece {
         return Piece.PieceType.KNIGHT.toString();
     }
 
-    private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isAFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.A_FILE[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
-                candidateOffset == 6 || candidateOffset == 15);
+               candidateOffset == 6 || candidateOffset == 15);
     }
 
-    private static boolean isSecondColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isBFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.B_FILE[currentPosition] && (candidateOffset == -10 || candidateOffset == 6);
     }
 
-    private static boolean isSeventhColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isGFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.G_FILE[currentPosition] && (candidateOffset == 10 || candidateOffset == -6);
     }
 
-    private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isHFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.H_FILE[currentPosition] && (candidateOffset == -15 || candidateOffset == -6 ||
-                candidateOffset == 10 || candidateOffset == 17);
+               candidateOffset == 10 || candidateOffset == 17);
     }
 }
 

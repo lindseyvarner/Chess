@@ -48,8 +48,7 @@ public class Pawn extends Piece {
                             final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
 
                             if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
-                                 legalMoves.add(new Move.MajorMove(board,
-                                     this, candidateDestinationCoordinate));
+                                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                             }
                         }
                         else if (candidateCoordinatesOffset == 9 &&
@@ -60,8 +59,7 @@ public class Pawn extends Piece {
                                 final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
 
                                 if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
-                                    legalMoves.add(new Move.MajorMove(board,
-                                        this, candidateDestinationCoordinate));
+                                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                                 }
                             }
                         }
@@ -80,13 +78,13 @@ public class Pawn extends Piece {
         return Piece.PieceType.PAWN.toString();
     }
 
-    private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isAFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.A_FILE[currentPosition] &&
-                (candidateOffset == -1 ||candidateOffset == -7 || candidateOffset == -9);
+               (candidateOffset == -1 ||candidateOffset == -7 || candidateOffset == -9);
     }
 
-    private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isHFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.H_FILE[currentPosition] &&
-                (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
+               (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
     }
 }

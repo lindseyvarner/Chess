@@ -23,23 +23,23 @@ public class King extends Piece {
         for (final int candidateCoordinatesOffset : CANDIDATE_MOVE_VECTOR_COORDINATES) {
                 final int candidateDestinationCoordinate = this.piecePosition + candidateCoordinatesOffset;
 
-            if (isFirstColumnExclusion(this.piecePosition, candidateCoordinatesOffset) ||
-                isEighthColumnExclusion(this.piecePosition, candidateCoordinatesOffset)) {
+            if (isAFileExclusion(this.piecePosition, candidateCoordinatesOffset) ||
+                isHFileExclusion(this.piecePosition, candidateCoordinatesOffset)) {
                     continue;
             }
             if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
                     final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
                     if (!candidateDestinationTile.isTileOccupied()) {
-                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                            legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                     }
                 else {
                     final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
                         if (this.pieceAlliance != pieceAlliance) {
-                            legalMoves.add(new Move.AttackMove(board, this,
-                            candidateDestinationCoordinate, pieceAtDestination));
+                                legalMoves.add(new Move.AttackMove(board, this,
+                                candidateDestinationCoordinate, pieceAtDestination));
                         }
                     }
                 }
@@ -56,13 +56,13 @@ public class King extends Piece {
         return Piece.PieceType.KING.toString();
     }
 
-    private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isAFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.A_FILE[currentPosition] &&
-                (candidateOffset == -9 || candidateOffset == -1 || candidateOffset == 7);
+               (candidateOffset == -9 || candidateOffset == -1 || candidateOffset == 7);
     }
 
-    private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isHFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.H_FILE[currentPosition] &&
-                (candidateOffset == -7 || candidateOffset == -1 || candidateOffset == 9);
+               (candidateOffset == -7 || candidateOffset == -1 || candidateOffset == 9);
     }
 }

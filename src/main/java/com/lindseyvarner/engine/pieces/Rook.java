@@ -25,13 +25,13 @@ public class Rook extends Piece {
 
             while (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
-                if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset) ||
-                    isEightColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset)) {
+                if (isAFileExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset) ||
+                    isHFileExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset)) {
                         break;
                 }
                 candidateDestinationCoordinate += candidateCoordinatesOffset;
                 if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                    final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
+                        final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
                     if (!candidateDestinationTile.isTileOccupied()) {
                             legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
@@ -61,11 +61,11 @@ public class Rook extends Piece {
         return Piece.PieceType.ROOK.toString();
     }
 
-    private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isAFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.A_FILE[currentPosition] && (candidateOffset == -1);
     }
 
-    private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isHFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.H_FILE[currentPosition] && (candidateOffset == 1);
     }
 }

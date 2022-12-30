@@ -25,8 +25,8 @@ public class Queen extends Piece {
 
             while (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
-                if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset) ||
-                    isEightColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset)) {
+                if (isAFileExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset) ||
+                    isHFileExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset)) {
                         break;
                 }
                 candidateDestinationCoordinate += candidateCoordinatesOffset;
@@ -61,13 +61,13 @@ public class Queen extends Piece {
         return Piece.PieceType.QUEEN.toString();
     }
 
-    private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isAFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.A_FILE[currentPosition] &&
-                (candidateOffset == -1 ||candidateOffset == -7 || candidateOffset == -9);
+               (candidateOffset == -1 ||candidateOffset == -7 || candidateOffset == -9);
     }
 
-    private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset) {
+    private static boolean isHFileExclusion(final int currentPosition, final int candidateOffset) {
         return Utilities.H_FILE[currentPosition] &&
-                (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
+               (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
     }
 }

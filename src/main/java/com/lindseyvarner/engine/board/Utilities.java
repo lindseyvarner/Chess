@@ -1,23 +1,23 @@
 package com.lindseyvarner.engine.board;
 
 public class Utilities {
-    public static final boolean[] A_FILE = initColumn(0);
-    public static final boolean[] B_FILE = initColumn(1);
-    public static final boolean[] C_FILE = initColumn(2);
-    public static final boolean[] D_FILE = initColumn(3);
-    public static final boolean[] E_FILE = initColumn(4);
-    public static final boolean[] F_FILE = initColumn(5);
-    public static final boolean[] G_FILE = initColumn(6);
-    public static final boolean[] H_FILE = initColumn(7);
+    public static final boolean[] A_FILE = initFile(0);
+    public static final boolean[] B_FILE = initFile(1);
+    public static final boolean[] C_FILE = initFile(2);
+    public static final boolean[] D_FILE = initFile(3);
+    public static final boolean[] E_FILE = initFile(4);
+    public static final boolean[] F_FILE = initFile(5);
+    public static final boolean[] G_FILE = initFile(6);
+    public static final boolean[] H_FILE = initFile(7);
 
-    public static final boolean[] EIGHTH_RANK = initRow(0);
-    public static final boolean[] SEVENTH_RANK = initRow(8);
-    public static final boolean[] SIXTH_RANK = initRow(16);
-    public static final boolean[] FIFTH_RANK = initRow(24);
-    public static final boolean[] FOURTH_RANK = initRow(32);
-    public static final boolean[] THIRD_RANK = initRow(40);
-    public static final boolean[] SECOND_RANK = initRow(48);
-    public static final boolean[] FIRST_RANK = initRow(56);
+    public static final boolean[] EIGHTH_RANK = initRank(0);
+    public static final boolean[] SEVENTH_RANK = initRank(8);
+    public static final boolean[] SIXTH_RANK = initRank(16);
+    public static final boolean[] FIFTH_RANK = initRank(24);
+    public static final boolean[] FOURTH_RANK = initRank(32);
+    public static final boolean[] THIRD_RANK = initRank(40);
+    public static final boolean[] SECOND_RANK = initRank(48);
+    public static final boolean[] FIRST_RANK = initRank(56);
 
     public static final int NUM_TILES = 64;
     public static final int NUM_TILES_PER_ROW = 8;
@@ -26,22 +26,22 @@ public class Utilities {
         throw new RuntimeException("Unable to instantiate");
     }
 
-    private static boolean[] initColumn(int columnNumber) {
-        final boolean[] column = new boolean[NUM_TILES];
+    private static boolean[] initFile(int fileIndex) {
+        final boolean[] file = new boolean[NUM_TILES];
         do {
-            column[columnNumber] = true;
-            columnNumber += NUM_TILES_PER_ROW;
-        } while (columnNumber < NUM_TILES);
-        return column;
+            file[fileIndex] = true;
+            fileIndex += NUM_TILES_PER_ROW;
+        } while (fileIndex < NUM_TILES);
+        return file;
     }
 
-    private static boolean[] initRow(int rowNumber) {
-        final boolean[] row = new boolean[NUM_TILES];
+    private static boolean[] initRank(int rankIndex) {
+        final boolean[] rank = new boolean[NUM_TILES];
         do {
-            row[rowNumber] = true;
-            rowNumber++;
-        } while (rowNumber % NUM_TILES_PER_ROW != 0);
-        return row;
+            rank[rankIndex] = true;
+            rankIndex++;
+        } while (rankIndex % NUM_TILES_PER_ROW != 0);
+        return rank;
     }
 
     public static boolean isValidTileCoordinate(final int coordinate) {

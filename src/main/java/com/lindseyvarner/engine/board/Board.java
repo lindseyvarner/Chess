@@ -97,7 +97,7 @@ public class Board {
     private static List<Tile> createGameBoard(final Builder builder) {
         final Tile[] tiles = new Tile[Utilities.NUM_TILES];
         for (int i = 0; i < Utilities.NUM_TILES; i++) {
-            tiles[i] = Tile.createTile(i, builder.boardConfiguation.get(i));
+            tiles[i] = Tile.createTile(i, builder.boardConfiguration.get(i));
         }
         return List.of(tiles);
     }
@@ -138,16 +138,16 @@ public class Board {
     }
 
     public static class Builder {
-        Map<Integer, Piece> boardConfiguation;
+        Map<Integer, Piece> boardConfiguration;
         Alliance nextMoveMaker;
         Pawn enPassantPawn;
 
         public Builder() {
-            this.boardConfiguation = new HashMap<>();
+            this.boardConfiguration = new HashMap<>();
         }
 
         public Builder setPiece(final Piece piece) {
-            this.boardConfiguation.put(piece.getPiecePosition(), piece);
+            this.boardConfiguration.put(piece.getPiecePosition(), piece);
             return this;
         }
 

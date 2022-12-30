@@ -16,11 +16,11 @@ public abstract class Player {
     protected final Collection<Move> legalMoves;
     private final boolean isInCheck;
 
-    Player(final Board board, final Collection<Move> legalMoves, final Collection<Move> opponentMoves) {
+    Player(final Board board, final Collection<Move> playerLegals, final Collection<Move> opponentLegals) {
         this.board = board;
         this.playerKing = establishKing();
-        this.legalMoves = legalMoves;
-        this.isInCheck = !Player.calculateAttacks(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
+        this.legalMoves = Collections.unmodifiableCollection(playerLegals);
+        this.isInCheck = !Player.calculateAttacks(this.playerKing.getPiecePosition(), opponentLegals).isEmpty();
     }
 
     public King getPlayerKing() {

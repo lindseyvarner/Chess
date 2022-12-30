@@ -63,10 +63,10 @@ public class Bishop extends Piece {
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.FIRST_COLUMN[currentPosition] && (candidateOffset == -9 || candidateOffset == -7);
+        return Utilities.A_FILE[currentPosition] && (candidateOffset == -9 || candidateOffset == -7);
     }
 
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.EIGHTH_COLUMN[currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
+        return Utilities.H_FILE[currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
     }
 }

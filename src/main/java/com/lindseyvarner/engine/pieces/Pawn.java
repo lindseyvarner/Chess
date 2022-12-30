@@ -3,7 +3,6 @@ package com.lindseyvarner.engine.pieces;
 import com.lindseyvarner.engine.Alliance;
 import com.lindseyvarner.engine.board.Board;
 import com.lindseyvarner.engine.board.Move;
-import com.lindseyvarner.engine.board.Tile;
 import com.lindseyvarner.engine.board.Utilities;
 
 import java.util.ArrayList;
@@ -31,8 +30,8 @@ public class Pawn extends Piece {
                 legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
             }
             else if (candidateCoordinatesOffset == 16 && this.isFirstMove() &&
-                    (Utilities.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
-                    (Utilities.SEVENTH_ROW[this.piecePosition] && getPieceAlliance().isWhite())) {
+                    (Utilities.SEVENTH_RANK[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
+                    (Utilities.SECOND_RANK[this.piecePosition] && getPieceAlliance().isWhite())) {
                 final int behindCandidateDestinationCoordinate =
                         this.piecePosition + (this.pieceAlliance.getDirection() * 8);
 
@@ -42,8 +41,8 @@ public class Pawn extends Piece {
                }
             }
             else if (candidateCoordinatesOffset == 7 &&
-                    !((Utilities.EIGHTH_COLUMN[this.piecePosition] && this.pieceAlliance.isWhite() ||
-                    (Utilities.FIRST_COLUMN[this.piecePosition] && this.pieceAlliance.isBlack())))) {
+                    !((Utilities.H_FILE[this.piecePosition] && this.pieceAlliance.isWhite() ||
+                    (Utilities.A_FILE[this.piecePosition] && this.pieceAlliance.isBlack())))) {
 
                 if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
@@ -53,8 +52,8 @@ public class Pawn extends Piece {
                     }
                 }
                 else if (candidateCoordinatesOffset == 9 &&
-                        !((Utilities.FIRST_COLUMN[this.piecePosition] && this.pieceAlliance.isWhite() ||
-                          (Utilities.EIGHTH_COLUMN[this.piecePosition] && this.pieceAlliance.isBlack())))) {
+                        !((Utilities.A_FILE[this.piecePosition] && this.pieceAlliance.isWhite() ||
+                          (Utilities.H_FILE[this.piecePosition] && this.pieceAlliance.isBlack())))) {
 
                     if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                         final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
@@ -81,12 +80,12 @@ public class Pawn extends Piece {
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.FIRST_COLUMN[currentPosition] &&
+        return Utilities.A_FILE[currentPosition] &&
                 (candidateOffset == -1 ||candidateOffset == -7 || candidateOffset == -9);
     }
 
     private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.EIGHTH_COLUMN[currentPosition] &&
+        return Utilities.H_FILE[currentPosition] &&
                 (candidateOffset == 1 || candidateOffset == -7 || candidateOffset == 9);
     }
 }

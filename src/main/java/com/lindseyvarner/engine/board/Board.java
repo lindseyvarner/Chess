@@ -129,6 +129,7 @@ public class Board {
         builder.setPiece(new Bishop(2, Alliance.BLACK));
         builder.setPiece(new Bishop(5, Alliance.BLACK));
 
+        builder.nextMoveMaker = Alliance.WHITE;
         return builder.build();
     }
 
@@ -156,13 +157,13 @@ public class Board {
             return this;
         }
 
-        public Board build() {
-            return new Board(this);
-        }
-
         public Builder setEnPassant(Pawn enPassantPawn) {
             this.enPassantPawn = enPassantPawn;
             return this;
+        }
+
+        public Board build() {
+            return new Board(this);
         }
     }
 }

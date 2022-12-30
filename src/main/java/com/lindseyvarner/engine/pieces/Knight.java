@@ -62,20 +62,20 @@ public class Knight extends Piece {
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.FIRST_COLUMN[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
+        return Utilities.A_FILE[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
                 candidateOffset == 6 || candidateOffset == 15);
     }
 
     private static boolean isSecondColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.SECOND_COLUMN[currentPosition] && (candidateOffset == -10 || candidateOffset == 6);
+        return Utilities.B_FILE[currentPosition] && (candidateOffset == -10 || candidateOffset == 6);
     }
 
     private static boolean isSeventhColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.SEVENTH_COLUMN[currentPosition] && (candidateOffset == 10 || candidateOffset == -6);
+        return Utilities.G_FILE[currentPosition] && (candidateOffset == 10 || candidateOffset == -6);
     }
 
     private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.EIGHTH_COLUMN[currentPosition] && (candidateOffset == -15 || candidateOffset == -6 ||
+        return Utilities.H_FILE[currentPosition] && (candidateOffset == -15 || candidateOffset == -6 ||
                 candidateOffset == 10 || candidateOffset == 17);
     }
 }

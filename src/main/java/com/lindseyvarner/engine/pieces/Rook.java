@@ -63,10 +63,10 @@ public class Rook extends Piece {
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.FIRST_COLUMN[currentPosition] && (candidateOffset == -1);
+        return Utilities.A_FILE[currentPosition] && (candidateOffset == -1);
     }
 
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.EIGHTH_COLUMN[currentPosition] && (candidateOffset == 1);
+        return Utilities.H_FILE[currentPosition] && (candidateOffset == 1);
     }
 }

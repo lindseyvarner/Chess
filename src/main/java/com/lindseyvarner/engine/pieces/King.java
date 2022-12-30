@@ -21,38 +21,36 @@ public class King extends Piece {
     public Collection<Move> calculateLegalMoves(Board board) {
         final List<Move> legalMoves = new ArrayList<>();
         for (final int candidateCoordinatesOffset : CANDIDATE_MOVE_VECTOR_COORDINATES) {
-            final int candidateDestinationCoordinate = this.piecePosition + candidateCoordinatesOffset;
+                final int candidateDestinationCoordinate = this.piecePosition + candidateCoordinatesOffset;
 
             if (isFirstColumnExclusion(this.piecePosition, candidateCoordinatesOffset) ||
                 isEighthColumnExclusion(this.piecePosition, candidateCoordinatesOffset)) {
-                continue;
+                    continue;
             }
             if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
+                    final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
-                if (!candidateDestinationTile.isTileOccupied()) {
-                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
-                }
+                    if (!candidateDestinationTile.isTileOccupied()) {
+                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                    }
                 else {
                     final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
-                    if (this.pieceAlliance != pieceAlliance) {
-                        legalMoves.add(new Move.AttackMove(board, this,
-                                candidateDestinationCoordinate, pieceAtDestination));
+                        if (this.pieceAlliance != pieceAlliance) {
+                            legalMoves.add(new Move.AttackMove(board, this,
+                            candidateDestinationCoordinate, pieceAtDestination));
+                        }
                     }
                 }
             }
+            return Collections.unmodifiableList(legalMoves);
         }
-
-        return Collections.unmodifiableList(legalMoves);
-    }
 
     @Override
     public King movePiece(final Move move) {
         return new King(move.getDestinationCoordinate(), move.getMovedPiece().getPieceAlliance());
     }
-
     @Override
     public String toString() {
         return Piece.PieceType.KING.toString();

@@ -18,22 +18,18 @@ public class BlackPlayer extends Player {
                        final Collection<Move> blackLegalMoves) {
         super(board, blackLegalMoves, whiteLegalMoves);
     }
-
     @Override
     public Collection<Piece> getActivePieces() {
         return this.board.getBlackPieces();
     }
-
     @Override
     public Alliance getAlliance() {
         return Alliance.BLACK;
     }
-
     @Override
     public Player getOpponent() {
         return this.board.whitePlayer();
     }
-
     @Override
     protected Collection<Move> calculateKingCastles(final Collection<Move> playerLegals,
                                                     final Collection<Move> opponentLegals) {
@@ -41,8 +37,8 @@ public class BlackPlayer extends Player {
         if (this.playerKing.isFirstMove() && !this.isInCheck()) {
 
             if (!this.board.getTile(5).isTileOccupied() &&
-                    !this.board.getTile(6).isTileOccupied()) {
-                final Tile rookTile = this.board.getTile(7);
+                !this.board.getTile(6).isTileOccupied()) {
+                    final Tile rookTile = this.board.getTile(7);
 
                 if (rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()) {
 
@@ -50,8 +46,8 @@ public class BlackPlayer extends Player {
                         Player.calculateAttacks(6, opponentLegals).isEmpty() &&
                         rookTile.getPiece().getPieceType().isRook()) {
                             kingCastles.add(new Move.KingsideCastle(this.board, this.playerKing, 6,
-                                                               (Rook)rookTile.getPiece(),
-                                                                rookTile.getTileCoordinate(), 5));
+                                                                   (Rook)rookTile.getPiece(),
+                                                                    rookTile.getTileCoordinate(), 5));
                     }
                 }
             }

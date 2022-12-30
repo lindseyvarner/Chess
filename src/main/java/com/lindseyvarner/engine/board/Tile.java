@@ -38,17 +38,14 @@ public abstract class Tile {
         private EmptyTile(final int coordinate) {
             super(coordinate);
         }
-
         @Override
         public String toString() {
             return "-";
         }
-
         @Override
         public boolean isTileOccupied() {
             return false;
         }
-
         @Override
         public Piece getPiece() {
             return null;
@@ -68,12 +65,10 @@ public abstract class Tile {
             return getPiece().getPieceAlliance().isBlack() ? getPiece().toString().toLowerCase() :
                    getPiece().toString();
         }
-
         @Override
         public boolean isTileOccupied() {
             return true;
         }
-
         @Override
         public Piece getPiece() {
             return this.pieceOnTile;

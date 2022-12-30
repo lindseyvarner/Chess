@@ -53,17 +53,17 @@ public abstract class Player {
     public boolean isMoveLegal(final Move move) {
         return this.legalMoves.contains(move);
     }
-
     public boolean isInCheck() {
         return this.isInCheck;
     }
-
     public boolean isCheckmated() {
         return this.isInCheck && !hasEscapeMove();
     }
-
     public boolean isStalemated() {
         return !this.isInCheck && !hasEscapeMove();
+    }
+    public boolean isCastled() {
+        return false;
     }
 
     protected boolean hasEscapeMove() {
@@ -74,10 +74,6 @@ public abstract class Player {
                 return true;
             }
         }
-        return false;
-    }
-
-    public boolean isCastled() {
         return false;
     }
 

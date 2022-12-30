@@ -26,23 +26,23 @@ public class Bishop extends Piece {
             while (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
                 if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset) ||
-                        isEightColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset)) {
-                     break;
+                    isEightColumnExclusion(candidateDestinationCoordinate, candidateCoordinatesOffset)) {
+                        break;
                 }
                 candidateDestinationCoordinate += candidateCoordinatesOffset;
                 if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
                     final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
                     if (!candidateDestinationTile.isTileOccupied()) {
-                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                            legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                     }
                     else {
                         final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                         final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
                         if (this.pieceAlliance != pieceAlliance) {
-                            legalMoves.add(new Move.AttackMove(board, this,
-                                    candidateDestinationCoordinate, pieceAtDestination));
+                                legalMoves.add(new Move.AttackMove(board, this,
+                                candidateDestinationCoordinate, pieceAtDestination));
                         }
                         break;
                     }
@@ -56,7 +56,6 @@ public class Bishop extends Piece {
     public Bishop movePiece(final Move move) {
         return new Bishop(move.getDestinationCoordinate(), move.getMovedPiece().getPieceAlliance());
     }
-
     @Override
     public String toString() {
         return Piece.PieceType.BISHOP.toString();

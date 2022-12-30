@@ -28,7 +28,6 @@ public class Utilities {
 
     private static boolean[] initColumn(int columnNumber) {
         final boolean[] column = new boolean[NUM_TILES];
-
         do {
             column[columnNumber] = true;
             columnNumber += NUM_TILES_PER_ROW;
@@ -41,10 +40,10 @@ public class Utilities {
         do {
             row[rowNumber] = true;
             rowNumber++;
-        }
-        while (rowNumber % NUM_TILES_PER_ROW != 0);
+        } while (rowNumber % NUM_TILES_PER_ROW != 0);
         return row;
     }
+
     public static boolean isValidTileCoordinate(final int coordinate) {
         return coordinate >= 0 && coordinate < NUM_TILES;
     }

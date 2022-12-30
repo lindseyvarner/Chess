@@ -21,8 +21,8 @@ public class Knight extends Piece {
     public Collection<Move> calculateLegalMoves(final Board board) {
         final List<Move> legalMoves = new ArrayList<>();
         for (final int currentCandidateOffset: CANDIDATE_MOVE_COORDINATES) {
-            final int candidateDestinationCoordinate;
-            candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
+                final int candidateDestinationCoordinate;
+                candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
 
             if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
@@ -30,20 +30,20 @@ public class Knight extends Piece {
                     isSecondColumnExclusion(this.piecePosition, currentCandidateOffset) ||
                     isSeventhColumnExclusion(this.piecePosition, currentCandidateOffset) ||
                     isEighthColumnExclusion(this.piecePosition, currentCandidateOffset)) {
-                    continue;
+                        continue;
                 }
 
                 final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
                 if (!candidateDestinationTile.isTileOccupied()) {
-                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                 }
                 else {
                     final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
                     if (this.pieceAlliance != pieceAlliance) {
-                        legalMoves.add(new Move.AttackMove(board, this,
-                        candidateDestinationCoordinate, pieceAtDestination));
+                            legalMoves.add(new Move.AttackMove(board, this,
+                            candidateDestinationCoordinate, pieceAtDestination));
                     }
                 }
             }
@@ -55,7 +55,6 @@ public class Knight extends Piece {
     public Knight movePiece(final Move move) {
         return new Knight(move.getDestinationCoordinate(), move.getMovedPiece().getPieceAlliance());
     }
-
     @Override
     public String toString() {
         return Piece.PieceType.KNIGHT.toString();

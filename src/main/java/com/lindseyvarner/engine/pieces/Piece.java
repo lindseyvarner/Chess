@@ -52,15 +52,12 @@ public abstract class Piece {
     public int hashCode() {
         return this.cachedHashCode;
     }
-
     public int getPiecePosition() {
         return this.piecePosition;
     }
-
     public Alliance getPieceAlliance() {
         return this.pieceAlliance;
     }
-
     public boolean isFirstMove() {
         return isFirstMove;
     }
@@ -74,7 +71,6 @@ public abstract class Piece {
             public boolean isKing() {
                 return true;
             }
-
             @Override
             public boolean isRook() {
                 return false;
@@ -85,7 +81,6 @@ public abstract class Piece {
             public boolean isKing() {
                 return false;
             }
-
             @Override
             public boolean isRook() {
                 return false;
@@ -96,7 +91,6 @@ public abstract class Piece {
             public boolean isKing() {
                 return false;
             }
-
             @Override
             public boolean isRook() {
                 return true;
@@ -107,7 +101,6 @@ public abstract class Piece {
             public boolean isKing() {
                 return false;
             }
-
             @Override
             public boolean isRook() {
                 return false;
@@ -118,7 +111,6 @@ public abstract class Piece {
             public boolean isKing() {
                 return false;
             }
-
             @Override
             public boolean isRook() {
                 return false;
@@ -129,18 +121,16 @@ public abstract class Piece {
             public boolean isKing() {
                 return false;
             }
-
             @Override
             public boolean isRook() {
                 return false;
             }
         };
 
-        private String pieceName;
+        private final String pieceName;
         PieceType(String pieceName) {
             this.pieceName = pieceName;
         }
-
         @Override
         public String toString() {
             return this.pieceName;

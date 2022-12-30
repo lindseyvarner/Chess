@@ -18,22 +18,18 @@ public class WhitePlayer extends Player {
                        final Collection<Move> blackLegalMoves) {
         super(board, whiteLegalMoves, blackLegalMoves);
     }
-
     @Override
     public Collection<Piece> getActivePieces() {
         return this.board.getWhitePieces();
     }
-
     @Override
     public Alliance getAlliance() {
         return Alliance.WHITE;
     }
-
     @Override
     public Player getOpponent() {
         return this.board.blackPlayer();
     }
-
     @Override
     protected Collection<Move> calculateKingCastles(final Collection<Move> playerLegals,
                                                     final Collection<Move> opponentLegals) {
@@ -41,8 +37,8 @@ public class WhitePlayer extends Player {
         if (this.playerKing.isFirstMove() && !this.isInCheck()) {
 
             if (!this.board.getTile(61).isTileOccupied() &&
-                    !this.board.getTile(62).isTileOccupied()) {
-                final Tile rookTile = this.board.getTile(63);
+                !this.board.getTile(62).isTileOccupied()) {
+                    final Tile rookTile = this.board.getTile(63);
 
                 if (rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()) {
 
@@ -50,8 +46,8 @@ public class WhitePlayer extends Player {
                         Player.calculateAttacks(62, opponentLegals).isEmpty() &&
                         rookTile.getPiece().getPieceType().isRook()) {
                             kingCastles.add(new Move.KingsideCastle(this.board, this.playerKing, 62,
-                                                               (Rook)rookTile.getPiece(),
-                                                                rookTile.getTileCoordinate(), 61));
+                                                                   (Rook)rookTile.getPiece(),
+                                                                    rookTile.getTileCoordinate(), 61));
                     }
                 }
             }
@@ -65,8 +61,8 @@ public class WhitePlayer extends Player {
                     Player.calculateAttacks(59, opponentLegals).isEmpty() &&
                     rookTile.getPiece().getPieceType().isRook()) {
                         kingCastles.add(new Move.QueensideCastle(this.board, this.playerKing, 58,
-                                                            (Rook)rookTile.getPiece(),
-                                                             rookTile.getTileCoordinate(), 59));
+                                                                (Rook)rookTile.getPiece(),
+                                                                 rookTile.getTileCoordinate(), 59));
                 }
             }
         }

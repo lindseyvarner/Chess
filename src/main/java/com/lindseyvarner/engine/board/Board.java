@@ -50,19 +50,15 @@ public class Board {
     public Player whitePlayer() {
         return this.whitePlayer;
     }
-
     public Player blackPlayer() {
         return this.blackPlayer;
     }
-
     public Player currentPlayer() {
         return this.currentPlayer;
     }
-
     public Collection<Piece> getWhitePieces() {
         return this.whitePieces;
     }
-
     public Collection<Piece> getBlackPieces() {
         return this.blackPieces;
     }

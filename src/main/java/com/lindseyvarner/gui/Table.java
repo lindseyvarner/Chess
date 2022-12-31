@@ -17,9 +17,11 @@ import java.util.List;
 public class Table {
     private final JFrame gameFrame;
     private final BoardPanel boardPanel;
+    private final Board chessBoard;
     private final static Dimension OUTER_FRAME = new Dimension(700, 700);
     private final static Dimension BOARD_PANEL = new Dimension(400, 350);
     private final static Dimension TILE_PANEL = new Dimension(10, 10);
+    private static String defaultIconPath = "icons/";
     private final Color lightTile = Color.decode("#DCD7C5");
     private final Color darkTile = Color.decode("#807261");
 
@@ -29,6 +31,7 @@ public class Table {
         final JMenuBar tableMenuBar = createMenuBar();
         this.gameFrame.setJMenuBar(tableMenuBar);
         this.gameFrame.setSize(OUTER_FRAME);
+        this.chessBoard = Board.createStandardBoard();
         this.boardPanel = new BoardPanel();
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.setVisible(true);
@@ -86,17 +89,17 @@ public class Table {
             this.tileID = tileID;
             setPreferredSize(TILE_PANEL);
             setTileColor();
+            setTileIcon(chessBoard);
             validate();
         }
-        private void assignIcon(final Board board) {
+        private void setTileIcon(final Board board) {
             this.removeAll();
             if (board.getTile(this.tileID).isTileOccupied()) {
-                String iconPath = "";
                 try {
-                    final BufferedImage image = ImageIO.read(new File(iconPath + board.getTile(this.tileID)
+                    final BufferedImage image = ImageIO.read(new File(defaultIconPath + board.getTile(this.tileID)
                                                             .getPiece().getPieceAlliance().toString()
                                                             .substring(0, 1) + board.getTile(this.tileID).getPiece()
-                                                            .toString() + ".gif"));
+                                                            .toString() + ".png"));
                     add(new JLabel(new ImageIcon(image)));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -115,3 +118,4 @@ public class Table {
         }
     }
 }
+

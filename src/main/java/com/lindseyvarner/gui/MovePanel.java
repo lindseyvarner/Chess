@@ -4,6 +4,7 @@ import com.lindseyvarner.engine.board.Board;
 import com.lindseyvarner.engine.board.Move;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.awt.*;
 public class MovePanel extends JPanel {
     private final DataModel model;
     private final JScrollPane scrollPane;
-    private static final Dimension MOVE_PANEL_DIMENSION = new Dimension(100, 400);
+    private static final Dimension MOVE_PANEL_DIMENSION = new Dimension(110, 700);
 
     MovePanel() {
         this.setLayout(new BorderLayout());
@@ -44,6 +45,9 @@ public class MovePanel extends JPanel {
             final String moveName = priorMove.toString();
 
             if (priorMove.getMovedPiece().getPieceAlliance().isWhite()) {
+                this.model.setValueAt(moveName + calculateCheck(board), currentRow, 0);
+            }
+            else if (priorMove.getMovedPiece().getPieceAlliance().isBlack()) {
                 this.model.setValueAt(moveName + calculateCheck(board), currentRow - 1, 1);
             }
         }
@@ -63,7 +67,7 @@ public class MovePanel extends JPanel {
 
     private static class DataModel extends DefaultTableModel {
         private final List<Row> values;
-        private static final String[] NAMES = {"White", "Black"};
+        private static final String[] NAMES = {"  White", "  Black"};
 
         DataModel() {
             this.values = new ArrayList<>();
@@ -106,6 +110,7 @@ public class MovePanel extends JPanel {
             }
             if (column == 0) {
                 currentRow.setWhiteMove((String)value);
+                fireTableRowsInserted(row, row);
             }
             else if (column == 1) {
                 currentRow.setBlackMove((String)value);

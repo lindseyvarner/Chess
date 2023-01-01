@@ -101,7 +101,7 @@ public abstract class Move {
         @Override
         public String toString() {
             return movedPiece.getPieceType().toString() +
-                   Utilities.getCoordinateAtPosition(this.destinationCoordinate);
+                   Utilities.getCoordinateAtPosition(String.valueOf(this.destinationCoordinate));
         }
     }
 
@@ -195,6 +195,10 @@ public abstract class Move {
             builder.setMoveMaker(this.board.currentPlayer().getOpponent().getAlliance());
             return builder.build();
         }
+        @Override
+        public String toString() {
+            return Utilities.getPositionAtCoordinate(String.valueOf(this.destinationCoordinate));
+        }
     }
 
     public static abstract class Castle extends Move {
@@ -274,7 +278,7 @@ public abstract class Move {
 
     public static final class NullMove extends Move {
         public NullMove() {
-            super(null, null, -1);
+            super(null, -1);
         }
         @Override
         public Board execute() {

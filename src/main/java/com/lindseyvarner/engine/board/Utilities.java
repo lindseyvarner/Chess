@@ -1,5 +1,7 @@
 package com.lindseyvarner.engine.board;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Utilities {
@@ -31,6 +33,28 @@ public class Utilities {
         throw new RuntimeException("Unable to instantiate");
     }
 
+    private static String[] initializeAlgebraicNotation() {
+        String[] squares = new String[64];
+        int[] rank = {8, 7, 6, 5, 4, 3, 2, 1};
+        String[] file = {"  a", "  b", "  c", "  d", "  e", "  f", "  g", "  h"};
+        int id = 0;
+        for(int i : rank) {
+            for (String j : file) {
+                squares[id] = j + i;
+                id++;
+            }
+        }
+        return squares;
+    }
+
+    private static Map<String, Integer> initializePositionCoordinate() {
+        final Map<String, Integer> positionToCoordinate = new HashMap<>();
+        for (int i = 0; i < NUM_TILES; i++) {
+            positionToCoordinate.put(ALGEBRAIC_NOTATION[i], i);
+        }
+        return Collections.unmodifiableMap(positionToCoordinate);
+    }
+
     private static boolean[] initFile(int fileIndex) {
         final boolean[] file = new boolean[NUM_TILES];
         do {
@@ -57,8 +81,8 @@ public class Utilities {
         return POSITION_COORDINATE.get(position);
     }
 
-    public static int getPositionAtCoordinate(final String coordinate) {
-        return ALGEBRAIC_NOTATION[coordinate];
+    public static String getPositionAtCoordinate(final String coordinate) {
+        return ALGEBRAIC_NOTATION[Integer.parseInt(coordinate)];
     }
 
 }

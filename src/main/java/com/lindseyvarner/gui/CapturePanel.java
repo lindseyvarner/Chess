@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class CapturePanel extends JPanel {
     private static final EtchedBorder PANEL_BORDER = new EtchedBorder(EtchedBorder.RAISED);
-    private static final Color PANEL_COLOR = Color.decode("#FDF5E6");
-    private static final Dimension CAPTURE_PANEL_DIMENSION = new Dimension(40, 80);
+    private static final Color PANEL_COLOR = Color.decode("#285440");
+    private static final Dimension CAPTURE_PANEL_DIMENSION = new Dimension(90, 300);
     private final JPanel northPanel;
     private final JPanel southPanel;
 

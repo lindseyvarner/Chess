@@ -15,9 +15,9 @@ public enum Status {
     },
     IN_CHECK {
         @Override
-        boolean isDone() {
+        public boolean isDone() {
             return false;
         }
     };
-    abstract boolean isDone();
+    public abstract boolean isDone();
 }

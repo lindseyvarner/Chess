@@ -1,5 +1,7 @@
 package com.lindseyvarner.engine.board;
 
+import java.util.Map;
+
 public class Utilities {
     public static final boolean[] A_FILE = initFile(0);
     public static final boolean[] B_FILE = initFile(1);
@@ -18,6 +20,9 @@ public class Utilities {
     public static final boolean[] THIRD_RANK = initRank(40);
     public static final boolean[] SECOND_RANK = initRank(48);
     public static final boolean[] FIRST_RANK = initRank(56);
+
+    public static final String[] ALGEBRAIC_NOTATION = initializeAlgebraicNotation();
+    public static final Map<String, Integer> POSITION_COORDINATE = initializePositionCoordinate();
 
     public static final int NUM_TILES = 64;
     public static final int NUM_TILES_PER_ROW = 8;
@@ -47,4 +52,13 @@ public class Utilities {
     public static boolean isValidTileCoordinate(final int coordinate) {
         return coordinate >= 0 && coordinate < NUM_TILES;
     }
+
+    public static int getCoordinateAtPosition(final String position) {
+        return POSITION_COORDINATE.get(position);
+    }
+
+    public static int getPositionAtCoordinate(final String coordinate) {
+        return ALGEBRAIC_NOTATION[coordinate];
+    }
+
 }

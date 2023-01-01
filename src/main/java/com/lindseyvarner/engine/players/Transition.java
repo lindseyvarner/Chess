@@ -17,4 +17,8 @@ public class Transition {
     public Status getStatus() {
         return this.status;
     }
+
+    public Board getTransitionBoard() {
+        return this.transitionBoard;
+    }
 }

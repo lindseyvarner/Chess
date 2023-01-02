@@ -1,10 +1,9 @@
-package com.lindseyvarner.gui;
+package com.lindseyvarner.GUI;
 
 import com.lindseyvarner.engine.board.Board;
 import com.lindseyvarner.engine.board.Move;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,7 @@ public class MovePanel extends JPanel {
         this.add(scrollPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
+
     public void redo(final Board board, final Table.MoveLog moveLog) {
         int currentRow = 0;
         this.model.clear();

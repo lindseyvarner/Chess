@@ -1,4 +1,4 @@
-package com.lindseyvarner.gui;
+package com.lindseyvarner.GUI;
 
 import com.lindseyvarner.engine.board.Board;
 import com.lindseyvarner.engine.board.Move;

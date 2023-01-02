@@ -1,4 +1,4 @@
-package com.lindseyvarner.gui;
+package com.lindseyvarner.GUI;
 
 import com.lindseyvarner.engine.board.Move;
 import com.lindseyvarner.engine.pieces.Piece;
@@ -76,8 +76,8 @@ public class CapturePanel extends JPanel {
         for (final Piece capturedPiece : whiteCaptures) {
             try {
                 final BufferedImage image = ImageIO.read(new File("icons/"
-                                           + capturedPiece.getPieceAlliance().toString().substring(0, 1) +
-                                           "" + capturedPiece.toString() + ".png"));
+                                            + capturedPiece.getPieceAlliance().toString().substring(0, 1) +
+                                            "" + capturedPiece.toString() + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
                 final JLabel label = new JLabel(new ImageIcon(icon.getImage().getScaledInstance
                                                (icon.getIconWidth() - 35,
@@ -92,8 +92,8 @@ public class CapturePanel extends JPanel {
         for (final Piece capturedPiece : blackCaptures) {
             try {
                 final BufferedImage image = ImageIO.read(new File("icons/"
-                        + capturedPiece.getPieceAlliance().toString().substring(0, 1) +
-                        "" + capturedPiece.toString() + ".png"));
+                                            + capturedPiece.getPieceAlliance().toString().substring(0, 1) +
+                                            "" + capturedPiece.toString() + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
                 final JLabel label = new JLabel(new ImageIcon(icon.getImage().getScaledInstance
                                                (icon.getIconWidth() - 35,

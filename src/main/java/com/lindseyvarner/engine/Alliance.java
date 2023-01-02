@@ -23,12 +23,10 @@ public enum Alliance {
         public boolean isBlack() {
             return false;
         }
-
         @Override
         public boolean isPromotionSquare(int position) {
             return Utilities.EIGHTH_RANK[position];
         }
-
         @Override
         public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
             return whitePlayer;
@@ -51,12 +49,10 @@ public enum Alliance {
         public boolean isBlack() {
             return true;
         }
-
         @Override
         public boolean isPromotionSquare(int position) {
             return Utilities.FIRST_RANK[position];
         }
-
         @Override
         public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
             return blackPlayer;

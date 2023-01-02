@@ -77,9 +77,11 @@ public class CapturePanel extends JPanel {
             try {
                 final BufferedImage image = ImageIO.read(new File("icons/"
                                            + capturedPiece.getPieceAlliance().toString().substring(0, 1) +
-                                           "" + capturedPiece.toString()));
+                                           "" + capturedPiece.toString() + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
-                final JLabel label = new JLabel();
+                final JLabel label = new JLabel(new ImageIcon(icon.getImage().getScaledInstance
+                                               (icon.getIconWidth() - 35,
+                                                icon.getIconHeight() - 30, Image.SCALE_SMOOTH)));
                 this.southPanel.add(label);
             }
             catch (final IOException e) {
@@ -91,10 +93,12 @@ public class CapturePanel extends JPanel {
             try {
                 final BufferedImage image = ImageIO.read(new File("icons/"
                         + capturedPiece.getPieceAlliance().toString().substring(0, 1) +
-                        "" + capturedPiece.toString()));
+                        "" + capturedPiece.toString() + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
-                final JLabel label = new JLabel();
-                this.southPanel.add(label);
+                final JLabel label = new JLabel(new ImageIcon(icon.getImage().getScaledInstance
+                                               (icon.getIconWidth() - 35,
+                                                icon.getIconHeight() - 30, Image.SCALE_SMOOTH)));
+                this.northPanel.add(label);
             }
             catch (final IOException e) {
                 e.printStackTrace();

@@ -36,7 +36,7 @@ public class Utilities {
     private static String[] initializeAlgebraicNotation() {
         String[] squares = new String[64];
         int[] rank = {8, 7, 6, 5, 4, 3, 2, 1};
-        String[] file = {"  a", "  b", "  c", "  d", "  e", "  f", "  g", "  h"};
+        String[] file = {"a", "b", "c", "d", "e", "f", "g", "h"};
         int id = 0;
         for(int i : rank) {
             for (String j : file) {
@@ -81,8 +81,8 @@ public class Utilities {
         return POSITION_COORDINATE.get(position);
     }
 
-    public static String getPositionAtCoordinate(final String coordinate) {
-        return ALGEBRAIC_NOTATION[Integer.parseInt(coordinate)];
+    public static String getPositionAtCoordinate(final int coordinate) {
+        return ALGEBRAIC_NOTATION[coordinate];
     }
 
 }

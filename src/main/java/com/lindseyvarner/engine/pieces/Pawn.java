@@ -31,7 +31,15 @@ public class Pawn extends Piece {
                     continue;
                 }
             if (candidateCoordinatesOffset == 8 && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
-                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+
+                if (this.pieceAlliance.isPromotionSquare(candidateDestinationCoordinate)) {
+                    legalMoves.add(new Move.Promotion(new Move.PawnMove
+                                  (board, this, candidateDestinationCoordinate)));
+                }
+                else {
+                    legalMoves.add(new Move.PawnMove
+                            (board, this, candidateDestinationCoordinate));
+                }
             }
             else if (candidateCoordinatesOffset == 16 && this.isFirstMove() &&
                     ((Utilities.SEVENTH_RANK[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
@@ -41,7 +49,8 @@ public class Pawn extends Piece {
 
                if (!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() &&
                    !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
-                        legalMoves.add(new Move.PawnJump(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new Move.PawnJump
+                                      (board, this, candidateDestinationCoordinate));
                }
             }
             else if (candidateCoordinatesOffset == 7 &&
@@ -52,18 +61,64 @@ public class Pawn extends Piece {
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
 
                     if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
-                        legalMoves.add(new Move.PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
+
+                        if (this.pieceAlliance.isPromotionSquare(candidateDestinationCoordinate)) {
+                            legalMoves.add(new Move.Promotion(new Move.PawnAttackMove
+                                          (board, this, candidateDestinationCoordinate, pieceOnCandidate)));
+                        }
+                        else {
+                            legalMoves.add(new Move.PawnAttackMove
+                                    (board, this,
+                                     candidateDestinationCoordinate, pieceOnCandidate));
+                            }
+                        }
+                    }
+                    else if (board.getEnPassantPawn() != null) {
+
+                    if (board.getEnPassantPawn().getPiecePosition() ==
+                            (this.piecePosition + (this.pieceAlliance.getOppositeDirection()))) {
+                        final Piece pieceOnCandidate = board.getEnPassantPawn();
+
+                        if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
+                            legalMoves.add(new Move.EnPassant
+                                    (board, this,
+                                     candidateDestinationCoordinate, pieceOnCandidate));
+                        }
                     }
                 }
             }
-                    else if (candidateCoordinatesOffset == 9 &&
-                            !((Utilities.A_FILE[this.piecePosition] && this.pieceAlliance.isWhite() ||
-                            (Utilities.H_FILE[this.piecePosition] && this.pieceAlliance.isBlack())))) {
+            else if (candidateCoordinatesOffset == 9 &&
+                     !((Utilities.A_FILE[this.piecePosition] && this.pieceAlliance.isWhite() ||
+                     (Utilities.H_FILE[this.piecePosition] && this.pieceAlliance.isBlack())))) {
 
                         if (board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                                 final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
+
                             if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
-                                    legalMoves.add(new Move.PawnAttackMove(board, this, candidateDestinationCoordinate, pieceOnCandidate));
+
+                                if (this.pieceAlliance.isPromotionSquare(candidateDestinationCoordinate)) {
+                                    legalMoves.add(new Move.Promotion(new Move.PawnAttackMove
+                                                  (board, this,
+                                                   candidateDestinationCoordinate, pieceOnCandidate)));
+                                }
+                                else {
+                                    legalMoves.add(new Move.PawnAttackMove
+                                                  (board, this,
+                                                   candidateDestinationCoordinate, pieceOnCandidate));
+                                }
+                            }
+                        }
+                        else if (board.getEnPassantPawn() != null) {
+
+                            if (board.getEnPassantPawn().getPiecePosition() ==
+                               (this.piecePosition - (this.pieceAlliance.getOppositeDirection()))) {
+                                    final Piece pieceOnCandidate = board.getEnPassantPawn();
+
+                                if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
+                                        legalMoves.add(new Move.EnPassant
+                                                      (board, this,
+                                                       candidateDestinationCoordinate, pieceOnCandidate));
+                                }
                             }
                         }
                     }
@@ -78,6 +133,9 @@ public class Pawn extends Piece {
     @Override
     public String toString() {
         return Piece.PieceType.PAWN.toString();
+    }
+    public Piece getPromotionPiece() {
+        return new Queen(this.piecePosition, this.pieceAlliance, false);
     }
 
     private static boolean isAFileExclusion(final int currentPosition, final int candidateOffset) {

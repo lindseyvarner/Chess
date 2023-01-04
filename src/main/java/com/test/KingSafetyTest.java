@@ -30,11 +30,11 @@ public class KingSafetyTest {
     public void test1() {
         final Builder builder = new Builder();
 
-        builder.setPiece(new King(4, BLACK, false));
+        builder.setPiece(new King(4, BLACK, false, false));
         builder.setPiece(new Pawn(12, BLACK));
 
         builder.setPiece(new Pawn(52, WHITE));
-        builder.setPiece(new King(60, WHITE, false));
+        builder.setPiece(new King(60, WHITE, false, false));
         builder.setMoveMaker(WHITE);
 
         final Board board = builder.build();

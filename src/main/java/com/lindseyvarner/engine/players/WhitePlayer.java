@@ -45,7 +45,7 @@ public class WhitePlayer extends Player {
                     if (Player.calculateAttacks(61, opponentLegals).isEmpty() &&
                         Player.calculateAttacks(62, opponentLegals).isEmpty() &&
                         rookTile.getPiece().getPieceType().isRook()) {
-                            kingCastles.add(new Move.KingsideCastle(this.board, this.playerKing, 62,
+                            kingCastles.add(new Move.KingsideCastleMove(this.board, this.playerKing, 62,
                                                                    (Rook)rookTile.getPiece(),
                                                                     rookTile.getTileCoordinate(), 61));
                     }
@@ -60,7 +60,7 @@ public class WhitePlayer extends Player {
                     Player.calculateAttacks(58, opponentLegals).isEmpty() &&
                     Player.calculateAttacks(59, opponentLegals).isEmpty() &&
                     rookTile.getPiece().getPieceType().isRook()) {
-                        kingCastles.add(new Move.QueensideCastle(this.board, this.playerKing, 58,
+                        kingCastles.add(new Move.QueensideCastleMove(this.board, this.playerKing, 58,
                                                                 (Rook)rookTile.getPiece(),
                                                                  rookTile.getTileCoordinate(), 59));
                 }

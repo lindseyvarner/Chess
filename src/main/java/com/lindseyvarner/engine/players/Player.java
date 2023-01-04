@@ -65,6 +65,12 @@ public abstract class Player {
     public boolean isCastled() {
         return false;
     }
+    public boolean isKingsideCastleCapable() {
+        return this.playerKing.isKingsideCastleCapable();
+    }
+    public boolean isQueensideCastleCapable() {
+        return this.playerKing.isQueensideCastleCapable();
+    }
 
     protected boolean hasEscapeMove() {
         for (final Move move : this.legalMoves) {

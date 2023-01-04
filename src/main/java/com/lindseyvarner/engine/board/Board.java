@@ -20,6 +20,7 @@ public class Board {
     private final BlackPlayer blackPlayer;
     private final Player currentPlayer;
     private final Pawn enPassantPawn;
+    private final Move transitionMove;
 
     public Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
@@ -33,6 +34,7 @@ public class Board {
         this.whitePlayer = new WhitePlayer(this, whiteLegalMoves, blackLegalMoves);
         this.blackPlayer = new BlackPlayer(this, whiteLegalMoves, blackLegalMoves);
         this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer, this.blackPlayer);
+        this.transitionMove = builder.transitionMove != null ? builder.transitionMove : Move.Factory.getNullMove();
     }
 
     @Override
@@ -113,7 +115,7 @@ public class Board {
         for (int i = 48; i < 56; i++) {
             builder.setPiece(new Pawn(i, Alliance.WHITE));
         }
-        builder.setPiece(new King(60, Alliance.WHITE));
+        builder.setPiece(new King(60, Alliance.WHITE, true, true));
         builder.setPiece(new Queen(59, Alliance.WHITE));
         builder.setPiece(new Rook(56, Alliance.WHITE));
         builder.setPiece(new Rook(63, Alliance.WHITE));
@@ -125,7 +127,7 @@ public class Board {
         for (int i = 8; i < 16; i++) {
             builder.setPiece(new Pawn(i, Alliance.BLACK));
         }
-        builder.setPiece(new King(4, Alliance.BLACK));
+        builder.setPiece(new King(4, Alliance.BLACK, true, true));
         builder.setPiece(new Queen(3, Alliance.BLACK));
         builder.setPiece(new Rook(0, Alliance.BLACK));
         builder.setPiece(new Rook(7, Alliance.BLACK));
@@ -144,6 +146,7 @@ public class Board {
     }
 
     public static class Builder {
+        public Move transitionMove;
         Map<Integer, Piece> boardConfiguration;
         Alliance nextMoveMaker;
         Pawn enPassantPawn;
@@ -159,6 +162,11 @@ public class Board {
 
         public Builder setMoveMaker(final Alliance nextMoveMaker) {
             this.nextMoveMaker = nextMoveMaker;
+            return this;
+        }
+
+        public Builder setMoveTransition(final Move transitionMove) {
+            this.transitionMove = transitionMove;
             return this;
         }
 

@@ -41,7 +41,7 @@ public class Table extends Observable {
     private Move computerMove;
     private boolean showLegalMoves;
 
-    private final static Dimension OUTER_FRAME = new Dimension(920, 700);
+    private final static Dimension OUTER_FRAME = new Dimension(960, 740);
     private final static Dimension BOARD_PANEL = new Dimension(400, 350);
     private final static Dimension TILE_PANEL = new Dimension(10, 10);
     private static String defaultIconPath = "icons/";
@@ -98,14 +98,6 @@ public class Table extends Observable {
 
     private JMenu createFileMenu() {
         final JMenu fileMenu = new JMenu("File");
-        final JMenuItem openPGN = new JMenuItem("Load PGN file");
-        openPGN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Open PGN file");
-            }
-        });
-        fileMenu.add(openPGN);
         final JMenuItem exit = new JMenuItem("Quit");
         exit.addActionListener(new ActionListener() {
             @Override
@@ -271,6 +263,8 @@ public class Table extends Observable {
                 add(tilePanel);
             }
             setPreferredSize(BOARD_PANEL);
+            setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+            setBackground(Color.decode("#423B32"));
             validate();
         }
         public void drawBoard(final Board board) {

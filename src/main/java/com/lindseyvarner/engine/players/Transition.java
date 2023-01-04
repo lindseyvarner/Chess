@@ -3,7 +3,7 @@ package com.lindseyvarner.engine.players;
 import com.lindseyvarner.engine.board.Board;
 import com.lindseyvarner.engine.board.Move;
 
-public class Transition {
+public final class Transition {
     private final Board transitionBoard;
     private final Move transitionMove;
     private final Status status;

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class CapturePanel extends JPanel {
     private static final EtchedBorder PANEL_BORDER = new EtchedBorder(EtchedBorder.RAISED);
     private static final Color PANEL_COLOR = Color.decode("#285440");
-    private static final Dimension CAPTURE_PANEL_DIMENSION = new Dimension(90, 300);
+    private static final Dimension CAPTURE_PANEL_DIMENSION = new Dimension(110, 300);
     private final JPanel northPanel;
     private final JPanel southPanel;
 
@@ -80,8 +80,8 @@ public class CapturePanel extends JPanel {
                                             "" + capturedPiece.toString() + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
                 final JLabel label = new JLabel(new ImageIcon(icon.getImage().getScaledInstance
-                                               (icon.getIconWidth() - 35,
-                                                icon.getIconHeight() - 30, Image.SCALE_SMOOTH)));
+                                               (icon.getIconWidth() - 40,
+                                                icon.getIconHeight() - 35, Image.SCALE_SMOOTH)));
                 this.southPanel.add(label);
             }
             catch (final IOException e) {
@@ -96,8 +96,8 @@ public class CapturePanel extends JPanel {
                                             "" + capturedPiece.toString() + ".png"));
                 final ImageIcon icon = new ImageIcon(image);
                 final JLabel label = new JLabel(new ImageIcon(icon.getImage().getScaledInstance
-                                               (icon.getIconWidth() - 35,
-                                                icon.getIconHeight() - 30, Image.SCALE_SMOOTH)));
+                                               (icon.getIconWidth() - 40,
+                                                icon.getIconHeight() - 35, Image.SCALE_SMOOTH)));
                 this.northPanel.add(label);
             }
             catch (final IOException e) {

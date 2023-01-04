@@ -13,6 +13,8 @@ import java.util.List;
 
 public class King extends Piece {
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9};
+    private boolean isCastled;
+
     public King(final int piecePosition, final Alliance pieceAlliance) {
         super(PieceType.KING, piecePosition, pieceAlliance, true);
     }
@@ -32,20 +34,128 @@ public class King extends Piece {
                     continue;
             }
             if (Utilities.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                    final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
+                final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
-                    if (!candidateDestinationTile.isTileOccupied()) {
-                            legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
-                    }
-                else {
+                if (!candidateDestinationTile.isTileOccupied()) {
+                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                } else {
                     final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
-                        if (this.pieceAlliance != pieceAlliance) {
-                                legalMoves.add(new Move.MajorAttackMove(board, this,
+                    if (this.pieceAlliance != pieceAlliance) {
+                        legalMoves.add(new Move.MajorAttackMove(board, this,
                                 candidateDestinationCoordinate, pieceAtDestination));
+                    }
+                }
+                /* if (this.isCastled == false) {
+
+                    if (this.kingsideCastleCapable) {
+                        Collection<Piece> opponentPieces;
+                        int castleRookStart, castleRookDestination, kingDestination, kingDangerPosition;
+
+                        if (this.getPieceAlliance().toString().equals("BLACK")) {
+                            castleRookStart = 7;
+                            castleRookDestination = 5;
+                            kingDestination = 6;
+                            kingDangerPosition = 55;
+                            opponentPieces = board.getWhitePieces();
+                        } else {
+                            castleRookStart = 63;
+                            castleRookDestination = 61;
+                            kingDestination = 62;
+                            kingDangerPosition = 14;
+                            opponentPieces = board.getBlackPieces();
+                        }
+                        boolean a = true, b = true;
+                        if (board.getTile(kingDestination).isTileOccupied() ||
+                            board.getTile(castleRookDestination).isTileOccupied()) {
+                            a = false;
+                        }
+                        outer:
+                        for (Piece opponentPiece : opponentPieces) {
+
+                            if (!opponentPiece.getPieceType().isKing()) {
+                                Collection<Move> opponentMoves = opponentPiece.calculateLegalMoves(board);
+
+                                for (Move m : opponentMoves) {
+                                    int target = m.getDestinationCoordinate();
+
+                                    if (target == castleRookDestination || target == kingDestination) {
+                                        b = false;
+                                        break outer;
+                                    }
+                                }
+                            } else {
+                                if (opponentPiece.getPiecePosition() == kingDangerPosition) {
+                                    b = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (a & b) {
+                            legalMoves.add(new Move.KingsideCastle(board, this, kingDestination,
+                                    new Rook(castleRookStart, this.getPieceAlliance(), false),
+                                    castleRookStart, castleRookDestination));
                         }
                     }
+                        if (this.queensideCastleCapable) {
+                                Collection<Piece> opponentPieces;
+                                int castleRookStart, castleRookDestination, kingDestination,
+                                    extraTileCoordinate, kingDangerPosition;
+
+                            if (this.getPieceAlliance().toString().equals("BLACK")) {
+                                castleRookStart = 0;
+                                castleRookDestination = 3;
+                                kingDestination = 2;
+                                extraTileCoordinate = 1;
+                                kingDangerPosition = 10;
+                                opponentPieces = board.getWhitePieces();
+                            } else {
+                                castleRookStart = 56;
+                                castleRookDestination = 59;
+                                kingDestination = 58;
+                                extraTileCoordinate = 57;
+                                kingDangerPosition = 50;
+                                opponentPieces = board.getBlackPieces();
+                        }
+                        boolean a = true, b = true;
+
+                        if (board.getTile(kingDestination).isTileOccupied() ||
+                            board.getTile(castleRookDestination).isTileOccupied() ||
+                            board.getTile(extraTileCoordinate).isTileOccupied()) {
+                                a = false;
+                        }
+                        outer:
+                        for (Piece opponentPiece : opponentPieces) {
+
+                            if (!opponentPiece.getPieceType().isKing()) {
+                                    Collection<Move> opponentMoves = opponentPiece.calculateLegalMoves(board);
+
+                                for (Move m : opponentMoves) {
+                                    int target = m.getDestinationCoordinate();
+
+                                    if (target == castleRookDestination ||
+                                        target == kingDestination ||
+                                        target == extraTileCoordinate) {
+                                            b = false;
+                                            break outer;
+                                    }
+                                }
+                            }
+                            else {
+                                if (opponentPiece.getPiecePosition() == kingDangerPosition ||
+                                    opponentPiece.getPiecePosition() == kingDangerPosition - 1) {
+                                        b = false;
+                                        break;
+                                }
+                            }
+                        }
+                        if (a & b)
+                            legalMoves.add(new Move.QueensideCastle(board, this, kingDestination,
+                                           new Rook(castleRookStart, this.getPieceAlliance(), false),
+                                           castleRookStart, castleRookDestination));
+                        }
+                    } */
                 }
             }
             return Collections.unmodifiableList(legalMoves);

@@ -4,8 +4,8 @@ package com.test;
 import com.lindseyvarner.engine.players.Transition;
 import org.junit.Test;
 
-import static com.lindseyvarner.engine.BLACK;
-import static com.lindseyvarner.engine.WHITE;
+import static com.lindseyvarner.engine.Alliance.BLACK;
+import static com.lindseyvarner.engine.Alliance.WHITE;
 import static org.junit.jupiter.api.Assertions.*;
 import com.lindseyvarner.engine.Alliance;
 import com.lindseyvarner.engine.board.*;

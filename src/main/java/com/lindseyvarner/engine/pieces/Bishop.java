@@ -66,7 +66,7 @@ public class Bishop extends Piece {
     }
 
     private static boolean isAFileExclusion(final int currentPosition, final int candidateOffset) {
-        return Utilities.A_FILE[currentPosition] && (candidateOffset == -9 || candidateOffset == -7);
+        return Utilities.A_FILE[currentPosition] && (candidateOffset == -9 || candidateOffset == 7);
     }
 
     private static boolean isHFileExclusion(final int currentPosition, final int candidateOffset) {

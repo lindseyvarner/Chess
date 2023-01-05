@@ -30,7 +30,7 @@ public class Table extends Observable {
     private final JFrame gameFrame;
     private final MovePanel movePanel;
     private final CapturePanel capturePanel;
-    private final BoardPanel boardPanel;
+    private final OuterBoardPanel boardPanel;
     private final MoveLog moveLog;
     private final Setup setup;
     private Board chessBoard;
@@ -48,6 +48,8 @@ public class Table extends Observable {
 
     private final Color lightTile = Color.decode("#DCD7C5");
     private final Color darkTile = Color.decode("#807261");
+    private final Color borderColor = Color.decode("#423B32");
+    private final Color textColor = Color.WHITE;
 
     private static final Table INSTANCE = new Table();
     private Table() {
@@ -59,7 +61,7 @@ public class Table extends Observable {
         this.chessBoard = Board.createStandardBoard();
         this.movePanel = new MovePanel();
         this.capturePanel = new CapturePanel();
-        this.boardPanel = new BoardPanel();
+        this.boardPanel = new OuterBoardPanel();
         this.moveLog = new MoveLog();
         this.addObserver(new Table.AIObserver());
         this.setup = new Setup(this.gameFrame, true);
@@ -70,6 +72,7 @@ public class Table extends Observable {
         this.gameFrame.add(this.movePanel, BorderLayout.EAST);
         this.gameFrame.setVisible(true);
     }
+
 
     public static Table get() {
         return INSTANCE;
@@ -86,6 +89,7 @@ public class Table extends Observable {
     private Board getBoard() {
         return this.chessBoard;
     }
+
 
 
     private JMenuBar createMenuBar() {
@@ -155,10 +159,10 @@ public class Table extends Observable {
         @Override
         public void update(final Observable o, final Object arg) {
             if (Table.get().getSetup().isAIPlayer(Table.get().getBoard().currentPlayer()) &&
-                !Table.get().getBoard().currentPlayer().isCheckmated() &&
-                !Table.get().getBoard().currentPlayer().isStalemated()) {
-                    final AIBrain brain = new AIBrain();
-                    brain.execute();
+                    !Table.get().getBoard().currentPlayer().isCheckmated() &&
+                    !Table.get().getBoard().currentPlayer().isStalemated()) {
+                final AIBrain brain = new AIBrain();
+                brain.execute();
             }
             if (Table.get().getBoard().currentPlayer().isCheckmated()) {
                 System.out.println(Table.get().getBoard().currentPlayer() + " is checkmated");
@@ -184,7 +188,7 @@ public class Table extends Observable {
     private CapturePanel getCapturePanel() {
         return this.capturePanel;
     }
-    private BoardPanel getBoardPanel() {
+    private OuterBoardPanel getBoardPanel() {
         return this.boardPanel;
     }
     private void moveUpdate(final PlayerType playerType) {
@@ -208,10 +212,10 @@ public class Table extends Observable {
                 final Move bestMove = get();
                 Table.get().updateComputerMove(bestMove);
                 Table.get().updateBoard(Table.get().getBoard().currentPlayer()
-                                        .makeMove(bestMove).getTransitionBoard());
+                        .makeMove(bestMove).getTransitionBoard());
                 Table.get().getMoveLog().addMove(bestMove);
                 Table.get().getMovePanel().redo(Table.get().getBoard(),
-                                                Table.get().getMoveLog());
+                        Table.get().getMoveLog());
                 Table.get().getCapturePanel().redo(Table.get().getMoveLog());
                 Table.get().getBoardPanel().drawBoard(Table.get().getBoard());
                 Table.get().moveUpdate(PlayerType.COMPUTER);
@@ -237,9 +241,9 @@ public class Table extends Observable {
         FLIPPED {
             @Override
             List<TilePanel> traverse(final List<TilePanel> boardTiles) {
-            List<TilePanel> flipped = new ArrayList<>(boardTiles);
-            Collections.reverse(flipped);
-            return flipped;
+                List<TilePanel> flipped = new ArrayList<>(boardTiles);
+                Collections.reverse(flipped);
+                return flipped;
             }
             @Override
             BoardDirection opposite() {
@@ -248,6 +252,80 @@ public class Table extends Observable {
         };
         abstract List<TilePanel> traverse(final List<TilePanel> boardTiles);
         abstract BoardDirection opposite();
+    }
+
+    private class OuterBoardPanel extends JPanel {
+        private static final int GAP = 5;
+        private BoardPanel innerBoard;
+
+        OuterBoardPanel() {
+            innerBoard = new BoardPanel();
+
+            setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 0.0;
+            gbc.weighty = 0.0;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.insets = new Insets(0, 2 * GAP, 0, 2 * GAP);
+            add(createRankPanel(), gbc);
+
+            gbc.gridx = 2;
+            gbc.anchor = GridBagConstraints.EAST;
+            add(createRankPanel(), gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.SOUTH;
+            gbc.insets = new Insets(GAP, 0, GAP, 0);
+            add(createFilePanel(), gbc);
+
+            gbc.gridy = 2;
+            gbc.anchor = GridBagConstraints.NORTH;
+            add(createFilePanel(), gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 1;
+            gbc.weightx = 1;
+            gbc.weighty = 1;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.insets = new Insets(0, 0, 0, 0);
+
+            add(innerBoard, gbc);
+            setBackground(borderColor);
+        }
+
+        private JPanel createFilePanel() {
+            JPanel filePanel = new JPanel(new GridLayout(1, 0));
+            for (char c : Arrays.asList('A','B','C','D','E', 'F','G','H')) {
+                var label = new JLabel(String.valueOf(c), SwingConstants.CENTER);
+                label.setForeground(textColor);
+                filePanel.add(label);
+            }
+            filePanel.setBackground(borderColor);
+            return filePanel;
+        }
+
+        private JPanel createRankPanel() {
+            JPanel rankPanel = new JPanel(new GridLayout(0, 1));
+            for (int i = 0; i < 8; i++) {
+                int row = 8 - i;
+                var label = new JLabel(String.valueOf(row));
+                label.setForeground(textColor);
+                rankPanel.add(label);
+            }
+            rankPanel.setBackground(borderColor);
+            return rankPanel;
+        }
+
+        public void drawBoard(final Board board) {
+            innerBoard.drawBoard(board);
+        }
+
     }
 
     private class BoardPanel extends JPanel {
@@ -263,8 +341,7 @@ public class Table extends Observable {
                 add(tilePanel);
             }
             setPreferredSize(BOARD_PANEL);
-            setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-            setBackground(Color.decode("#423B32"));
+            setBackground(borderColor);
             validate();
         }
         public void drawBoard(final Board board) {
@@ -338,7 +415,7 @@ public class Table extends Observable {
                         } else {
                             destinationTile = chessBoard.getTile(tileID);
                             final Move move = Move.Factory.createMove(chessBoard, sourceTile.getTileCoordinate(),
-                                                                      destinationTile.getTileCoordinate());
+                                    destinationTile.getTileCoordinate());
                             final Transition transition = chessBoard.currentPlayer().makeMove(move);
                             if (transition.getStatus().isDone()) {
                                 chessBoard = transition.getTransitionBoard();
@@ -395,9 +472,9 @@ public class Table extends Observable {
                 try {
                     final BufferedImage image =
                             ImageIO.read(new File(defaultIconPath + board.getTile(this.tileID)
-                            .getPiece().getPieceAlliance().toString()
-                            .substring(0, 1) + board.getTile(this.tileID).getPiece()
-                            .toString() + ".png"));
+                                    .getPiece().getPieceAlliance().toString()
+                                    .substring(0, 1) + board.getTile(this.tileID).getPiece()
+                                    .toString() + ".png"));
                     add(new JLabel(new ImageIcon(image)));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -424,21 +501,22 @@ public class Table extends Observable {
 
         private Collection<Move> pieceLegalMoves(final Board board) {
             if (playerMovedPiece != null && playerMovedPiece.getPieceAlliance() ==
-                board.currentPlayer().getAlliance()) {
-                    return playerMovedPiece.calculateLegalMoves(board);
+                    board.currentPlayer().getAlliance()) {
+                return playerMovedPiece.calculateLegalMoves(board);
             }
             return Collections.emptyList();
         }
 
         private void setTileColor() {
             if (Utilities.EIGHTH_RANK[this.tileID] || Utilities.SIXTH_RANK[this.tileID] ||
-                Utilities.FOURTH_RANK[this.tileID] || Utilities.SECOND_RANK[this.tileID]) {
-                    setBackground(this.tileID % 2 == 0 ? lightTile : darkTile);
+                    Utilities.FOURTH_RANK[this.tileID] || Utilities.SECOND_RANK[this.tileID]) {
+                setBackground(this.tileID % 2 == 0 ? lightTile : darkTile);
             } else if (Utilities.SEVENTH_RANK[this.tileID] || Utilities.FIFTH_RANK[this.tileID] ||
-                       Utilities.THIRD_RANK[this.tileID] || Utilities.FIRST_RANK[this.tileID]) {
-                            setBackground(this.tileID % 2 != 0 ? lightTile : darkTile);
+                    Utilities.THIRD_RANK[this.tileID] || Utilities.FIRST_RANK[this.tileID]) {
+                setBackground(this.tileID % 2 != 0 ? lightTile : darkTile);
             }
         }
     }
 }
+
 

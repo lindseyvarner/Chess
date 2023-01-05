@@ -1,6 +1,8 @@
 package com.test;
 
 //import com.lindseyvarner.engine.players;
+import com.lindseyvarner.AI.BoardEvaluator;
+import com.lindseyvarner.AI.Evaluator;
 import com.lindseyvarner.engine.players.Transition;
 import org.junit.Test;
 
@@ -82,9 +84,9 @@ class BoardTest {
             assertFalse(board.currentPlayer().getOpponent().isCheckmated());
             assertEquals(board.currentPlayer(), board.whitePlayer());
             assertEquals(board.currentPlayer().getOpponent(), board.blackPlayer());
-            //BoardEvaluator evaluator = StandardBoardEvaluator.get();
+            //Evaluator evaluator = BoardEvaluator.get();
             //System.out.println(evaluator.evaluate(board, 0));
-            //assertEquals(StandardBoardEvaluator.get().evaluate(board, 0), 0);
+            //assertEquals(BoardEvaluator.get().evaluate(board, 0), 0);
 
             //final Move move = Utilities.createMove(board, Utilities.getCoordinateAtPosition("e1"),
                     //Utilities.getCoordinateAtPosition("f1"));

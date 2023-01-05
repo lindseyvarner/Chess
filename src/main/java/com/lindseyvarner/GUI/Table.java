@@ -90,8 +90,6 @@ public class Table extends Observable {
         return this.chessBoard;
     }
 
-
-
     private JMenuBar createMenuBar() {
         final JMenuBar tableMenuBar = new JMenuBar();
         tableMenuBar.add(createFileMenu());
@@ -159,16 +157,16 @@ public class Table extends Observable {
         @Override
         public void update(final Observable o, final Object arg) {
             if (Table.get().getSetup().isAIPlayer(Table.get().getBoard().currentPlayer()) &&
-                    !Table.get().getBoard().currentPlayer().isCheckmated() &&
-                    !Table.get().getBoard().currentPlayer().isStalemated()) {
-                final AIBrain brain = new AIBrain();
-                brain.execute();
+                !Table.get().getBoard().currentPlayer().isCheckmated() &&
+                !Table.get().getBoard().currentPlayer().isStalemated()) {
+                    final AIBrain brain = new AIBrain();
+                    brain.execute();
             }
             if (Table.get().getBoard().currentPlayer().isCheckmated()) {
-                System.out.println(Table.get().getBoard().currentPlayer() + " is checkmated");
+                    System.out.println(Table.get().getBoard().currentPlayer() + " is checkmated");
             }
             if (Table.get().getBoard().currentPlayer().isStalemated()) {
-                System.out.println("Draw by stalemate");
+                    System.out.println("Draw by stalemate");
             }
         }
     }
@@ -191,6 +189,7 @@ public class Table extends Observable {
     private OuterBoardPanel getBoardPanel() {
         return this.boardPanel;
     }
+
     private void moveUpdate(final PlayerType playerType) {
         setChanged();
         notifyObservers(playerType);
@@ -198,7 +197,6 @@ public class Table extends Observable {
 
     private static class AIBrain extends SwingWorker<Move, String> {
         private AIBrain() {
-
         }
         @Override
         protected Move doInBackground() throws Exception {
@@ -212,10 +210,12 @@ public class Table extends Observable {
                 final Move bestMove = get();
                 Table.get().updateComputerMove(bestMove);
                 Table.get().updateBoard(Table.get().getBoard().currentPlayer()
-                        .makeMove(bestMove).getTransitionBoard());
+                           .makeMove(bestMove).getTransitionBoard());
+
                 Table.get().getMoveLog().addMove(bestMove);
                 Table.get().getMovePanel().redo(Table.get().getBoard(),
-                        Table.get().getMoveLog());
+                           Table.get().getMoveLog());
+
                 Table.get().getCapturePanel().redo(Table.get().getMoveLog());
                 Table.get().getBoardPanel().drawBoard(Table.get().getBoard());
                 Table.get().moveUpdate(PlayerType.COMPUTER);
@@ -301,6 +301,7 @@ public class Table extends Observable {
 
         private JPanel createFilePanel() {
             JPanel filePanel = new JPanel(new GridLayout(1, 0));
+
             for (char c : Arrays.asList('A','B','C','D','E', 'F','G','H')) {
                 var label = new JLabel(String.valueOf(c), SwingConstants.CENTER);
                 label.setForeground(textColor);
@@ -312,6 +313,7 @@ public class Table extends Observable {
 
         private JPanel createRankPanel() {
             JPanel rankPanel = new JPanel(new GridLayout(0, 1));
+
             for (int i = 0; i < 8; i++) {
                 int row = 8 - i;
                 var label = new JLabel(String.valueOf(row));
@@ -330,15 +332,14 @@ public class Table extends Observable {
 
     private class BoardPanel extends JPanel {
         final List<TilePanel> boardTiles;
-
         BoardPanel() {
             super(new GridLayout(8, 8));
             this.boardTiles = new ArrayList<>();
 
             for (int i = 0; i < Utilities.NUM_TILES; i++) {
-                final TilePanel tilePanel = new TilePanel(this, i);
-                this.boardTiles.add(tilePanel);
-                add(tilePanel);
+                    final TilePanel tilePanel = new TilePanel(this, i);
+                    this.boardTiles.add(tilePanel);
+                    add(tilePanel);
             }
             setPreferredSize(BOARD_PANEL);
             setBackground(borderColor);
@@ -347,8 +348,8 @@ public class Table extends Observable {
         public void drawBoard(final Board board) {
             removeAll();
             for (final TilePanel tilePanel : boardDirection.traverse(boardTiles)) {
-                tilePanel.drawTile(board);
-                add(tilePanel);
+                    tilePanel.drawTile(board);
+                    add(tilePanel);
             }
             validate();
             repaint();
@@ -360,6 +361,7 @@ public class Table extends Observable {
         MoveLog() {
             this.moves = new ArrayList<>();
         }
+
         public List<Move> getMoves() {
             return this.moves;
         }
@@ -398,28 +400,31 @@ public class Table extends Observable {
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
-                    if (isRightMouseButton(e)) {
 
-                        sourceTile = null;
-                        destinationTile = null;
-                        playerMovedPiece = null;
-                    } else if (isLeftMouseButton(e)) {
+                    if (isRightMouseButton(e)) {
+                            sourceTile = null;
+                            destinationTile = null;
+                            playerMovedPiece = null;
+                    }
+                    else if (isLeftMouseButton(e)) {
 
                         if (sourceTile == null) {
-                            sourceTile = chessBoard.getTile(tileID);
-                            playerMovedPiece = sourceTile.getPiece();
+                                sourceTile = chessBoard.getTile(tileID);
+                                playerMovedPiece = sourceTile.getPiece();
 
                             if (playerMovedPiece == null) {
-                                sourceTile = null;
+                                    sourceTile = null;
                             }
-                        } else {
+                        }
+                        else {
                             destinationTile = chessBoard.getTile(tileID);
                             final Move move = Move.Factory.createMove(chessBoard, sourceTile.getTileCoordinate(),
-                                    destinationTile.getTileCoordinate());
+                                              destinationTile.getTileCoordinate());
                             final Transition transition = chessBoard.currentPlayer().makeMove(move);
+
                             if (transition.getStatus().isDone()) {
-                                chessBoard = transition.getTransitionBoard();
-                                moveLog.addMove(move);
+                                    chessBoard = transition.getTransitionBoard();
+                                    moveLog.addMove(move);
                             }
                             sourceTile = null;
                             destinationTile = null;
@@ -430,8 +435,9 @@ public class Table extends Observable {
                             public void run() {
                                 movePanel.redo(chessBoard, moveLog);
                                 capturePanel.redo(moveLog);
+
                                 if (setup.isAIPlayer(chessBoard.currentPlayer())) {
-                                    Table.get().moveUpdate(PlayerType.HUMAN);
+                                        Table.get().moveUpdate(PlayerType.HUMAN);
                                 }
                                 boardPanel.drawBoard(chessBoard);
                             }
@@ -441,18 +447,15 @@ public class Table extends Observable {
 
                 @Override
                 public void mousePressed(final MouseEvent e) {
-
                 }
                 @Override
                 public void mouseReleased(final MouseEvent e) {
                 }
                 @Override
                 public void mouseEntered(final MouseEvent e) {
-
                 }
                 @Override
                 public void mouseExited(final MouseEvent e) {
-
                 }
             });
             validate();
@@ -470,13 +473,14 @@ public class Table extends Observable {
             this.removeAll();
             if (board.getTile(this.tileID).isTileOccupied()) {
                 try {
-                    final BufferedImage image =
-                            ImageIO.read(new File(defaultIconPath + board.getTile(this.tileID)
-                                    .getPiece().getPieceAlliance().toString()
-                                    .substring(0, 1) + board.getTile(this.tileID).getPiece()
-                                    .toString() + ".png"));
+                    final BufferedImage image = ImageIO.read(new File(defaultIconPath +
+                                                board.getTile(this.tileID)
+                                                .getPiece().getPieceAlliance().toString()
+                                                .substring(0, 1) + board.getTile(this.tileID)
+                                                .getPiece().toString() + ".png"));
                     add(new JLabel(new ImageIcon(image)));
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -509,11 +513,11 @@ public class Table extends Observable {
 
         private void setTileColor() {
             if (Utilities.EIGHTH_RANK[this.tileID] || Utilities.SIXTH_RANK[this.tileID] ||
-                    Utilities.FOURTH_RANK[this.tileID] || Utilities.SECOND_RANK[this.tileID]) {
-                setBackground(this.tileID % 2 == 0 ? lightTile : darkTile);
+                Utilities.FOURTH_RANK[this.tileID] || Utilities.SECOND_RANK[this.tileID]) {
+                    setBackground(this.tileID % 2 == 0 ? lightTile : darkTile);
             } else if (Utilities.SEVENTH_RANK[this.tileID] || Utilities.FIFTH_RANK[this.tileID] ||
-                    Utilities.THIRD_RANK[this.tileID] || Utilities.FIRST_RANK[this.tileID]) {
-                setBackground(this.tileID % 2 != 0 ? lightTile : darkTile);
+                       Utilities.THIRD_RANK[this.tileID] || Utilities.FIRST_RANK[this.tileID]) {
+                            setBackground(this.tileID % 2 != 0 ? lightTile : darkTile);
             }
         }
     }

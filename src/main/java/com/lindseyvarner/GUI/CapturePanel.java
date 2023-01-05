@@ -104,6 +104,7 @@ public class CapturePanel extends JPanel {
                 e.printStackTrace();
             }
         }
-        validate();
+        revalidate();
+        repaint();
     }
 }

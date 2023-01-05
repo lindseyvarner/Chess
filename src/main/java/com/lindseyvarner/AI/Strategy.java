@@ -5,6 +5,4 @@ import com.lindseyvarner.engine.board.Move;
 
 public interface Strategy {
     Move execute(Board board);
-
-
 }

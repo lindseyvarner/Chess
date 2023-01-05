@@ -53,11 +53,13 @@ public class Minimax implements Strategy {
             return this.evaluator.evaluate(board, depth);
         }
         int lowestValue = Integer.MAX_VALUE;
+
         for (final Move move : board.currentPlayer().getLegalMoves()) {
             final Transition transition = board.currentPlayer().makeMove(move);
 
             if (transition.getStatus().isDone()) {
                 final int currentValue = max(transition.getTransitionBoard(), depth - 1);
+
                 if (currentValue <= lowestValue) {
                     lowestValue = currentValue;
                 }
@@ -74,11 +76,13 @@ public class Minimax implements Strategy {
             return this.evaluator.evaluate(board, depth);
         }
         int highestValue = Integer.MIN_VALUE;
+
         for (final Move move : board.currentPlayer().getLegalMoves()) {
             final Transition transition = board.currentPlayer().makeMove(move);
 
             if (transition.getStatus().isDone()) {
                 final int currentValue = min(transition.getTransitionBoard(), depth - 1);
+
                 if (currentValue >= highestValue) {
                     highestValue = currentValue;
                 }

@@ -72,10 +72,12 @@ public class MovePanel extends JPanel {
         DataModel() {
             this.values = new ArrayList<>();
         }
+
         public void clear() {
             this.values.clear();
             setRowCount(0);
         }
+
         @Override
         public int getRowCount() {
             if (this.values == null) {
@@ -83,10 +85,12 @@ public class MovePanel extends JPanel {
             }
             return this.values.size();
         }
+
         @Override
         public int getColumnCount() {
             return NAMES.length;
         }
+
         @Override
         public Object getValueAt(final int row, final int column) {
             final Row currentRow = this.values.get(row);
@@ -98,6 +102,7 @@ public class MovePanel extends JPanel {
             }
             return null;
         }
+
         @Override
         public void setValueAt(final Object value, final int row, final int column) {
             final Row currentRow;
@@ -117,10 +122,12 @@ public class MovePanel extends JPanel {
                 fireTableCellUpdated(row, column);
             }
         }
+
         @Override
         public Class<?> getColumnClass(final int column) {
             return Move.class;
         }
+
         @Override
         public String getColumnName(final int column) {
             return NAMES[column];
@@ -132,7 +139,6 @@ public class MovePanel extends JPanel {
         private String blackMove;
 
         Row() {
-
         }
 
         public String getWhiteMove() {

@@ -43,6 +43,4 @@ public final class BoardEvaluator implements Evaluator {
         }
         return value;
     }
-
-
 }
